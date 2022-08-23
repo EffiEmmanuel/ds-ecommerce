@@ -5,7 +5,7 @@ import UserSignupForm from "../../forms/UserSignUpForm";
 function UserSignUp() {
   return (
     <div className="main-content login d-flex justify-content-center">
-      <div className="login-container-details mt-5">
+      <div className="login-container-details mt-3">
         <div className="login-container-header">
           <h1>
             Sign up<span className="ds-pink">.</span>

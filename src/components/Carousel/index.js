@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
-import carouselItem1 from "../../assets/images/carousel/1.webp";
-import carouselItem2 from "../../assets/images/carousel/2.webp";
+import carouselItem1 from "../../assets/images/carousel/2.webp";
+import carouselItem2 from "../../assets/images/carousel/1.webp";
 import carouselItem3 from "../../assets/images/carousel/3.webp";
 import { Fade } from "react-reveal";
 

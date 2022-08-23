@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
 import logo from "../../assets/images/logo.png";
-import SearchProductsForm from "../../forms/SearchProudctsForm";
+import SearchProductsForm from "../../forms/SearchProductsForm";
 
 function Navbar() {
   const [mobileMenuVibility, setMobileMenuVisibility] = useState("none");
@@ -39,6 +39,16 @@ function Navbar() {
                   Shop
                 </a>
               </li>
+
+              <li className="nav-item d-flex">
+                <a href="/signup" className="nav-link">
+                  <i class="bi bi-cart cart-icon"></i>
+                </a>
+
+                <a href="/login" className="nav-link">
+                  <i class="bi bi-person-circle profile-icon"></i>
+                </a>
+              </li>
             </ul>
 
             {/* Mobile menu */}
@@ -57,17 +67,17 @@ function Navbar() {
             >
               <ul>
                 <li className="mobile-nav-item">
-                  <a href="/login" id="mobile-nav-link" className="nav-link">
+                  <a href="/login" className="mobile-nav-link nav-link">
                     Log in
                   </a>
                 </li>
                 <li className="mobile-nav-item">
-                  <a href="/signup" id="mobile-nav-link" className="nav-link">
+                  <a href="/signup" className="mobile-nav-link nav-link">
                     Sign up
                   </a>
                 </li>
                 <li className="mobile-nav-item">
-                  <a href="/shop" id="mobile-nav-link" className="nav-link">
+                  <a href="/shop" className="mobile-nav-link nav-link">
                     Shop
                   </a>
                 </li>

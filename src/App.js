@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
+import SearchResults from "./components/SearchResults";
 import Shop from "./components/Shop";
 import UserLogin from "./components/UserLogin";
 import UserSignUp from "./components/UserSignup";
@@ -19,7 +20,7 @@ function App() {
           <Route path="/signup" element={<UserSignUp />} />
           <Route path="/email/verify" element={<Homepage />} />
           <Route path="/password/reset" element={<Homepage />} />
-          <Route path="/search" element={<Homepage />} />
+          <Route path="/search" element={<SearchResults />} />
           <Route path="/products/:pid" element={<Homepage />} />
           <Route path="/cart" element={<Homepage />} />
           <Route path="/profile" element={<Homepage />} />

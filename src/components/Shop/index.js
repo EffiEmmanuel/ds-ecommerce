@@ -9,19 +9,109 @@ function Shop() {
     <div className="main-content shop">
       <Carousel />
 
-      <div className="product-category">
+      <div className="product-category px-5 py-5">
         <h3 className="category-title">
-          Shop Accesories<span className="ds-pink">.</span>
+          Shop Electronics<span className="ds-pink">.</span>
         </h3>
 
-        <div className="products">
-          <ProductCard 
-            title='Ps5 Pad'
-            description='lorem ipsum dolor'
+        <div className="products d-flex flex-wrap justify-content-center mt-5">
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
             image={ps5Pad}
             productId={1}
           />
         </div>
+      </div>
+
+      <div className="product-category px-5 py-5">
+        <h3 className="category-title">
+          Shop Clothing<span className="ds-pink">.</span>
+        </h3>
+
+        <div className="products d-flex flex-wrap justify-content-center mt-5">
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+        </div>
+      </div>
+
+      <div className="product-category px-5 py-5">
+        <h3 className="category-title">
+          Shop Wristwatches<span className="ds-pink">.</span>
+        </h3>
+
+        <div className="products d-flex flex-wrap justify-content-center mt-5">
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+          <ProductCard
+            title="Ps5 Pad"
+            description="lorem ipsum dolor"
+            image={ps5Pad}
+            productId={1}
+          />
+        </div>
+      </div>
+
+      <div className="container-fluid">
+        <footer className="footer">
+          <p>Copyright &copy;2022. JavaScript Group 4</p>
+        </footer>
       </div>
     </div>
   );

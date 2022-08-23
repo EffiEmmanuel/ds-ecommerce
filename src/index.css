@@ -34,6 +34,7 @@ code {
   margin-top: 30px;
   text-align: center;
 }
+
 a.ds-pink {
   text-decoration: none;
   font-weight: 600;
@@ -42,6 +43,11 @@ a.ds-pink {
 .ds-bg-pink {
   background-color: #fd2a4d;
   color: #fff;
+  border: none;
+}
+
+.semibold-text {
+  font-weight: 600;
 }
 
 @media (max-width: 576px) {

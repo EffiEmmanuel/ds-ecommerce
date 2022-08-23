@@ -1,0 +1,12 @@
+.product-description {
+    font-size: .8rem;
+}
+
+.product-card {
+    cursor: pointer;
+    transition: transform .5s ease-in-out !important;
+}
+
+.product-card:hover {
+    transform: scale(1.05) !important;
+}

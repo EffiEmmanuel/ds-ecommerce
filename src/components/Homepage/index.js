@@ -22,7 +22,7 @@ function Homepage() {
           </Fade>
 
           <Fade up>
-            <a href="/market" role="button" className="btn btn-dark shop-btn">
+            <a href="/shop" role="button" className="btn btn-dark shop-btn">
               Shop
             </a>
           </Fade>
@@ -34,6 +34,12 @@ function Homepage() {
           alt="Welcome to the digital superstore"
         />
       </div>
+
+      <main className="container-fluid">
+        <div className="main-section-header d-flex justify-content-center align-items-center my-5">
+          <h2 className="semibold-text">Meet the development team<span className="ds-pink">.</span></h2>
+        </div>        
+      </main>
     </div>
   );
 }
