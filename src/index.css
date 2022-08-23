@@ -22,6 +22,10 @@ code {
     monospace;
 }
 
+.main-content {
+  margin-top: 60px;
+}
+
 .ds-pink {
   color: #fd2a4d;
 }
