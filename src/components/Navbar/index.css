@@ -157,3 +157,9 @@ ul li a:hover {
     display: none;
   }
 }
+
+@media (max-width: 576px) {
+  .nav {
+    padding: 5px;
+  }
+}

@@ -54,12 +54,22 @@
 
 @media (max-width: 768px) {
   .headline h1 {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
+  }
+
+  .headline p {
+    font-size: .9rem;
   }
 }
 
 @media (max-width: 992px) {
   .ps-pad {
     display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .headline {
+    padding: 10px;
   }
 }

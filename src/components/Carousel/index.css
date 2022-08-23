@@ -1,0 +1,14 @@
+.slider-container {
+    height: 450px;
+}
+
+.slider-item {
+    height: 100%;
+}
+
+.carousel-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+}

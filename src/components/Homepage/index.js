@@ -5,7 +5,7 @@ import ps5Pad from "../../assets/images/ps5-pad-trimmy.png";
 
 function Homepage() {
   return (
-    <div className="container-fluid main-container">
+    <div className="container-md-fluid main-container">
       <div className="main-content home container-fluid">
         <div className="headline">
           <Fade duration={2000}>

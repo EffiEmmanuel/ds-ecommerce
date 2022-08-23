@@ -39,8 +39,13 @@ a.ds-pink {
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
+.ds-bg-pink {
+  background-color: #fd2a4d;
+  color: #fff;
+}
+
+@media (max-width: 576px) {
   .container-fluid {
-    padding: 10px 0;
+    padding: 10px 3px !important;
   }
 }

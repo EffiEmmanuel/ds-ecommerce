@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
+import Shop from "./components/Shop";
 import UserLogin from "./components/UserLogin";
 import UserSignUp from "./components/UserSignup";
 
@@ -13,7 +14,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/shop" element={<Homepage />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/signup" element={<UserSignUp />} />
           <Route path="/email/verify" element={<Homepage />} />
