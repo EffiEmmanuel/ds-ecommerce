@@ -1,0 +1,14 @@
+.searchbar {
+  padding: 8px;
+  border: 1px solid #a4a4a4;
+  border-radius: 10px;
+  width: 100%;
+}
+.searchbar:focus {
+  outline: none;
+}
+
+.searchbar::placeholder,
+.searchbar {
+  font-size: 0.8rem;
+}
