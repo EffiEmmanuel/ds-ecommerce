@@ -5,7 +5,7 @@ function ProductCard({ title, description, image, productId }) {
   return (
     <Fade duration={1500}>
       <div className="product-card card py-3" style={{ width: "18rem" }}>
-        <img className="card-img-top p-4" src={image} alt="" />
+        <img className="card-img-top p-4 w-100" src={image} alt="" />
 
         <div className="card-body">
           <h5 className="card-title">{title}</h5>
