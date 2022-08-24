@@ -11,17 +11,20 @@ import SearchResults from "./components/SearchResults";
 import Shop from "./components/Shop";
 import UserLogin from "./components/UserLogin";
 import UserSignUp from "./components/UserSignup";
+import CreateProduct from "./components/Admin/CreateProduct";
+import ViewProducts from "./components/Admin/ViewProducts";
 
 function App() {
   return (
     <React.Fragment>
       <div className="container-fluid">
-        {window.location.href.indexOf("admin") &&
+        {/* {window.location.href.indexOf("admin") &&
         !sessionStorage.getItem("token") ? (
           <AdminNavbar />
         ) : (
           <Navbar />
-        )}
+        )} */}
+        <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/shop" element={<Shop />} />
@@ -35,6 +38,8 @@ function App() {
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/products/createNew" element={<CreateProduct />} />
+          <Route path="/admin/products/viewProducts" element={<ViewProducts />} />
         </Routes>
       </div>
     </React.Fragment>
