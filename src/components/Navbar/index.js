@@ -4,10 +4,13 @@ import logo from "../../assets/images/logo.png";
 import SearchProductsForm from "../../forms/SearchProductsForm";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigator = useNavigate();
+
   const [mobileMenuVibility, setMobileMenuVisibility] = useState("none");
-  let isUserVerified
+  const [isUserVerified, setIsUserVerified ]= useState(true);
 
   const toggleMenu = (e) => {
     e.target.checked
@@ -15,24 +18,39 @@ function Navbar() {
       : setMobileMenuVisibility("none");
   };
 
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("token"));
-    isUserVerified = user?.verified;
-  }, [sessionStorage.getItem('token')]);
-
   const resendVerificationEmail = async () => {
     const user = JSON.parse(sessionStorage.getItem("token"));
-    const email = user?.email
-    const userId = user?.userId
-    await axios.post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/resendToken?userId=${userId}&email=${email}`)
-    .then((res) => {
-      console.log('RESPONSE:', res)
-      // Swal.fire({
-      //   title: 'Success',
-      //   text: res
-      // })
-    })
-  }
+    const email = user?.email;
+    const userId = user?._id;
+    await axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/resendToken?userId=${userId}&&email=${email}`
+      )
+      .then((res) => {
+        Swal.fire({
+          title: "Success",
+          text: res.data.message,
+          icon: "success",
+          timer: 3000,
+        });
+        navigator(`/email/verify/?userId=${userId}`);
+        sessionStorage.clear();
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: "Success",
+          text: err.message,
+          icon: "success",
+          timer: 3000,
+        });
+        window.location.reload();
+      });
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("token"));
+    setIsUserVerified(user?.verified);
+  }, [isUserVerified, sessionStorage.getItem("token")]);
 
   return (
     <div className="layout-container">
@@ -127,9 +145,12 @@ function Navbar() {
             </div>
           </nav>
         </div>
-        {(!isUserVerified && sessionStorage.getItem('token')) && (
+        {(sessionStorage.getItem("token") && !isUserVerified ) && (
           <p className="verification-message bg-danger p-2">
-            Please verify your email. <span onClick={resendVerificationEmail}>Resend verification token</span>
+            Please verify your email.{" "}
+            <span onClick={resendVerificationEmail}>
+              Resend verification token
+            </span>
           </p>
         )}
       </header>

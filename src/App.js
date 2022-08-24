@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Dashboard from "./components/Admin/Dashboard";
+import AdminLogin from "./components/Admin/Login";
+import AdminNavbar from "./components/Admin/AdminNavbar";
 import EmailVerification from "./components/EmailVerification";
 import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
@@ -13,7 +16,12 @@ function App() {
   return (
     <React.Fragment>
       <div className="container-fluid">
-        <Navbar />
+        {window.location.href.indexOf("admin") &&
+        !sessionStorage.getItem("token") ? (
+          <AdminNavbar />
+        ) : (
+          <Navbar />
+        )}
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/shop" element={<Shop />} />
@@ -24,6 +32,9 @@ function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/products/:pid" element={<Homepage />} />
           <Route path="/cart" element={<Homepage />} />
+
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </React.Fragment>
