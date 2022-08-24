@@ -18,12 +18,9 @@ function App() {
   return (
     <React.Fragment>
       <div className="container-fluid">
-        {/* {window.location.href.indexOf("admin") &&
-        !sessionStorage.getItem("token") ? (
-          <AdminNavbar />
-        ) : (
-          <Navbar />
-        )} */}
+        {/* {window.location.href.indexOf("admin") && <AdminNavbar />}
+
+        {!window.location.href.indexOf("admin") && <Navbar />} */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -39,7 +36,10 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/products/createNew" element={<CreateProduct />} />
-          <Route path="/admin/products/viewProducts" element={<ViewProducts />} />
+          <Route
+            path="/admin/products/viewProducts"
+            element={<ViewProducts />}
+          />
         </Routes>
       </div>
     </React.Fragment>
