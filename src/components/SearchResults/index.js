@@ -61,6 +61,7 @@ function SearchResults() {
                     description={product.description}
                     image={product.image}
                     productId={product._id}
+                    price={product.price}
                   />
                 </div>
               );

@@ -1,8 +1,9 @@
 import React from "react";
 import "./index.css";
 import carouselItem1 from "../../assets/images/carousel/2.webp";
-import carouselItem2 from "../../assets/images/carousel/1.webp";
+import carouselItem2 from "../../assets/images/carousel/3.webp";
 import carouselItem3 from "../../assets/images/carousel/3.webp";
+import carouselItem4 from "../../assets/images/carousel/4.webp";
 import { Fade } from "react-reveal";
 
 function Carousel() {
@@ -25,13 +26,6 @@ function Carousel() {
             <div className="carousel-item slider-item">
               <img
                 src={carouselItem2}
-                alt="Shop with us"
-                className="d-block w-100 carousel-image"
-              />
-            </div>
-            <div className="carousel-item slider-item">
-              <img
-                src={carouselItem3}
                 alt="Shop with us"
                 className="d-block w-100 carousel-image"
               />

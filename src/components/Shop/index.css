@@ -1,6 +1,10 @@
 .product-category {
-  margin: 40px 0;
+  margin: 60px 0;
   padding: 20px;
+}
+
+.product-category2 {
+  margin: -80px 0 60px;
 }
 
 .category-title {
@@ -24,4 +28,8 @@
   -webkit-box-shadow: 2px -5px 33px -14px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 2px -5px 33px -14px rgba(0, 0, 0, 0.1);
   font-size: .85rem;
+}
+
+.shop-product {
+  margin: 0 0 180px;
 }

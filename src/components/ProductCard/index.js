@@ -4,8 +4,9 @@ import { Fade } from "react-reveal";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { number } from "yup";
 
-function ProductCard({ title, description, image, productId }) {
+function ProductCard({ title, description, image, productId, price }) {
   const navigator = useNavigate();
 
   const handleAddToWishlist = async () => {
@@ -57,7 +58,7 @@ function ProductCard({ title, description, image, productId }) {
       });
       navigator("/login");
     } else {
-      const user = sessionStorage.getItem("token");
+      const user = JSON.parse(sessionStorage.getItem("token"));
       const userId = user._id;
       await axios
         .post(
@@ -87,13 +88,14 @@ function ProductCard({ title, description, image, productId }) {
   return (
     <Fade duration={1500}>
       <div
-        className="product-card card mx-2 my-2"
+        className="product-card card mx-2 mb-5"
         style={{ width: "18rem", height: "250px" }}
       >
         <img className="card-img-top product-image" src={image} alt="" />
 
         <div className="card-body">
           <h5 className="card-title product-title">{title}</h5>
+          <p className="semibold-text">₦{price}</p>
           <p className="card-text product-description">{description}</p>
           <div className="d-flex justify-content-between align-items-center">
             <button

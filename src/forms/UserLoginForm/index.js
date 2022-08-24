@@ -20,6 +20,7 @@ function UserLoginForm() {
         icon: 'success',
         timer: 3000
       })
+
       const token = jwtDecode(res.data.token)
       console.log('DECODED USER:', token)
       sessionStorage.setItem('token', JSON.stringify(token))
@@ -27,7 +28,12 @@ function UserLoginForm() {
       window.location.reload()
     })
     .catch(err => {
-      console.log('ERROR:', err)
+      Swal.fire({
+        title: 'Error',
+        text: err.response.data.message,
+        icon: 'error',
+        timer: 3000
+      })
     })
   };
 

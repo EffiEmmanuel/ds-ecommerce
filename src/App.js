@@ -24,7 +24,6 @@ function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/products/:pid" element={<Homepage />} />
           <Route path="/cart" element={<Homepage />} />
-          <Route path="/profile" element={<Homepage />} />
         </Routes>
       </div>
     </React.Fragment>

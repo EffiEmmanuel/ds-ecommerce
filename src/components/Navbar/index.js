@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import logo from "../../assets/images/logo.png";
 import SearchProductsForm from "../../forms/SearchProductsForm";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 function Navbar() {
   const [mobileMenuVibility, setMobileMenuVisibility] = useState("none");
+  let isUserVerified
 
   const toggleMenu = (e) => {
     e.target.checked
       ? setMobileMenuVisibility("flex")
       : setMobileMenuVisibility("none");
   };
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("token"));
+    isUserVerified = user?.verified;
+  }, [sessionStorage.getItem('token')]);
+
+  const resendVerificationEmail = async () => {
+    const user = JSON.parse(sessionStorage.getItem("token"));
+    const email = user?.email
+    const userId = user?.userId
+    await axios.post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/resendToken?userId=${userId}&email=${email}`)
+    .then((res) => {
+      console.log('RESPONSE:', res)
+      // Swal.fire({
+      //   title: 'Success',
+      //   text: res
+      // })
+    })
+  }
 
   return (
     <div className="layout-container">
@@ -41,6 +63,7 @@ function Navbar() {
                   <a
                     onClick={() => {
                       sessionStorage.clear();
+                      sessionStorage.removeItem("token");
                       window.location.reload();
                     }}
                     href={window.location}
@@ -104,6 +127,11 @@ function Navbar() {
             </div>
           </nav>
         </div>
+        {(!isUserVerified && sessionStorage.getItem('token')) && (
+          <p className="verification-message bg-danger p-2">
+            Please verify your email. <span onClick={resendVerificationEmail}>Resend verification token</span>
+          </p>
+        )}
       </header>
     </div>
   );

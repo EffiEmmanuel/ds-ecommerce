@@ -1,18 +1,42 @@
 import { useFormik } from "formik";
 import "./index.css";
 import React from "react";
-import handleFormSubmit from "../../helpers/handleFormSubmit";
+// import handleFormSubmit from "../../helpers/handleFormSubmit";
 import signupSchema from "./validation";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function UserSignupForm() {
-  const onSubmit = async (values, actions) => {
-    const response = handleFormSubmit(
-      "/customer/login",
-      values,
-      "Login Successful"
-    );
+  const navigator = useNavigate();
 
-    console.log('Response:', response)
+  const onSubmit = async (values, actions) => {
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/register`, values)
+      .then((res) => {
+        Swal.fire({
+          title: "Welcome onboard!🎊",
+          text: "Please verify your account to proceed.",
+          icon: "success",
+          timer: 3000,
+        });
+
+        console.log("userId:", res);
+        const userId = res.data.data._id;
+
+        setTimeout(() => {
+          navigator(`/email/verify?userId=${userId}`);
+        }, 3200);
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: "Error",
+          text: 'This user already exists!',
+          icon: "error",
+          timer: 3000,
+        });
+        // window.location.reload()
+      });
   };
 
   const {
@@ -26,7 +50,7 @@ function UserSignupForm() {
     initialValues: {
       email: "",
       password: "",
-      name: ""
+      name: "",
     },
     validationSchema: signupSchema,
     onSubmit,
@@ -47,7 +71,7 @@ function UserSignupForm() {
         />
         {errors.name && <p className="error">{errors.name}</p>}
       </div>
-      
+
       <div className="form-group mt-4">
         <label htmlFor="email">Email:</label>
         <input

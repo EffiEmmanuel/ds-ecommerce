@@ -137,6 +137,11 @@ ul li a:hover {
   z-index: 90;
 }
 
+.verification-message {
+  text-align: center;
+  color: #fff;
+}
+
 @media (max-width: 992px) {
   ul.nav-items {
     width: 45%;
