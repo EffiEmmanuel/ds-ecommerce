@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { makeAPICall } from "../../helpers/apiCall";
 import './index.css'
 
 function SearchProductsForm() {
   const navigator = useNavigate()
+  const [search, setSearch] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    navigator('/search')
+    navigator(`/search?search=${search}`)
+    window.location.reload()
   }
-
 
   return (
     <form className="form-container search-form" onSubmit={handleSubmit}>
@@ -18,6 +21,8 @@ function SearchProductsForm() {
           type="text"
           className="searchbar"
           name="search"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
           placeholder="Search products"
         />
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import EmailVerification from "./components/EmailVerification";
 import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
 import SearchResults from "./components/SearchResults";
@@ -18,7 +19,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/signup" element={<UserSignUp />} />
-          <Route path="/email/verify" element={<Homepage />} />
+          <Route path="/email/verify" element={<EmailVerification />} />
           <Route path="/password/reset" element={<Homepage />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/products/:pid" element={<Homepage />} />

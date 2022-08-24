@@ -5,7 +5,7 @@ const handleFormSubmit = async (endpoint, data, title, text) => {
   let response;
   // API call to the server
   await axios
-    .post(`${process.env.REACT_APP_BASE_URL}/${endpoint}`, {
+    .post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/${endpoint}`, {
       data,
     })
     .then((res) => {

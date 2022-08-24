@@ -25,19 +25,38 @@ function Navbar() {
 
             <ul className="nav-items">
               <li className="nav-item">
-                <a href="/login" className="nav-link">
-                  Log in
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="/signup" className="nav-link">
-                  Sign up
-                </a>
-              </li>
-              <li className="nav-item">
                 <a href="/shop" className="nav-link">
                   Shop
                 </a>
+              </li>
+
+              <li className="nav-item">
+                {!sessionStorage.getItem("token") && (
+                  <a href="/login" className="nav-link">
+                    Log in
+                  </a>
+                )}
+
+                {sessionStorage.getItem("token") && (
+                  <a
+                    onClick={() => {
+                      sessionStorage.clear();
+                      window.location.reload();
+                    }}
+                    href={window.location}
+                    className="nav-link"
+                  >
+                    Log out
+                  </a>
+                )}
+              </li>
+
+              <li className="nav-item">
+                {!sessionStorage.getItem("token") && (
+                  <a href="/signup" className="nav-link">
+                    Sign up
+                  </a>
+                )}
               </li>
 
               <li className="nav-item d-flex">
