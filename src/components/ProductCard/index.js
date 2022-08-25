@@ -76,9 +76,11 @@ function ProductCard({
     } else {
       const user = JSON.parse(sessionStorage.getItem("user"));
       const userId = user._id;
+      console.log('USERID:', userId)
+      console.log('PRODUCT:', productId)
       await axios
         .post(
-          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCart?userId=${userId}&productId=${productId}`
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCartP?userId=${userId}&productId=${productId}`
         )
         .then((res) => {
           console.log("RESPONSE:", res);
@@ -88,6 +90,7 @@ function ProductCard({
             icon: "success",
             timer: 3000,
           });
+          // window.location.reload()
         })
         .catch((err) => {
           console.log("ERROR:", err);
@@ -148,6 +151,7 @@ function ProductCard({
           icon: "success",
           timer: 3000,
         });
+        window.location.reload()
       })
       .catch((err) => {
         console.log("ERROR:", err);
@@ -243,10 +247,6 @@ function ProductCard({
               <>
                 <button onClick={handleDeleteFromCart} className="btn btn-dark">
                   <i class="bi bi-trash"></i>
-                </button>
-
-                <button onClick={checkoutCart} className="btn btn-dark">
-                  Place order
                 </button>
               </>
             )}

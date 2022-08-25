@@ -36,7 +36,6 @@ function UserLoginForm() {
           sessionStorage.removeItem("admin");
         }
 
-        console.log('RES:', JSON.stringify(res.data.user))
         // Log in user
         sessionStorage.setItem('token', res.data.token);
         sessionStorage.setItem('user', JSON.stringify(res.data.user));

@@ -6,7 +6,7 @@ import ProductCard from "../ProductCard";
 import axios from "axios";
 
 function Shop() {
-  const [allProducts, setAllProducts] = useState(undefined);
+  const [allProducts, setAllProducts] = useState();
 
   // Get all products
   useEffect(() => {
@@ -15,13 +15,14 @@ function Shop() {
         .get(`${process.env.REACT_APP_BASE_URL_ADMIN}/getProduct`)
         .then((res) => {
           setAllProducts(res.data.products);
+          console.log('RESPONSE:', res)
         })
         .catch((err) => {
           console.log("ERROR:", err);
         });
     }
     getAllProducts();
-  }, [allProducts]);
+  }, []);
 
   return (
     <div className="main-content shop">
