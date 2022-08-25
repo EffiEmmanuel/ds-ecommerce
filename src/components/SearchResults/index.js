@@ -62,6 +62,7 @@ function SearchResults() {
                     image={product.image}
                     productId={product._id}
                     price={product.price}
+                    isUser={true}
                   />
                 </div>
               );

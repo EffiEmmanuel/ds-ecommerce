@@ -21,7 +21,7 @@ function Shop() {
         });
     }
     getAllProducts();
-  });
+  }, [allProducts]);
 
   return (
     <div className="main-content shop">
@@ -42,6 +42,7 @@ function Shop() {
                   image={product.image}
                   productId={product._id}
                   price={product.price}
+                  isUser={true}
                 />
               </div>
             );

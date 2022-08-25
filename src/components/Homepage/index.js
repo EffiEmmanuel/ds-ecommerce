@@ -37,8 +37,18 @@ function Homepage() {
 
       <main className="container-fluid">
         <div className="main-section-header d-flex justify-content-center align-items-center my-5">
-          <h2 className="semibold-text">Meet the development team<span className="ds-pink">.</span></h2>
-        </div>        
+          <h2 className="semibold-text">
+            Meet the development team<span className="ds-pink">.</span>
+          </h2>
+        </div>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+          <p>Ebube Okolie Kelvin - Project Manager</p>{" "}
+          <p>Akinloluwa Olumuyide - Lead backend developer</p>{" "}
+          <p>Effi Emmanuel Nwachukwu - Lead frontend developer</p>{" "}
+          <p>Okatta Chinedu - Frontend developer</p>{" "}
+          <p>Nwogoh Emmanuel - Frontend developer</p>{" "}
+          <p>Imuekemhe Precious Adams - Frontend developer</p>{" "}
+        </div>
       </main>
     </div>
   );

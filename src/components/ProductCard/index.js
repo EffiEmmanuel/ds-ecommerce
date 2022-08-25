@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { Fade } from "react-reveal";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { number } from "yup";
+// import { number } from "yup";
+import styled from "styled-components";
+import EditProduct from "../Admin/EditProduct";
 
-function ProductCard({ title, description, image, productId, price, isAdmin, isUser, isCart }) {
+function ProductCard({
+  title,
+  category,
+  description,
+  image,
+  productId,
+  price,
+  cartId,
+  isAdmin,
+  isUser,
+  isCart,
+}) {
+  const [editProductDisplay, setEditProductDisplay] = useState("none");
+  const [overlay, setOverlay] = useState("none");
+
   const navigator = useNavigate();
 
   const handleAddToWishlist = async () => {
@@ -58,11 +74,11 @@ function ProductCard({ title, description, image, productId, price, isAdmin, isU
       });
       navigator("/login");
     } else {
-      const user = JSON.parse(sessionStorage.getItem("token"));
+      const user = JSON.parse(sessionStorage.getItem("user"));
       const userId = user._id;
       await axios
         .post(
-          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCartP?userId=${userId}&productId=${productId}`
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCart?userId=${userId}&productId=${productId}`
         )
         .then((res) => {
           console.log("RESPONSE:", res);
@@ -85,11 +101,97 @@ function ProductCard({ title, description, image, productId, price, isAdmin, isU
     }
   };
 
+  const handleDeleteProduct = async () => {
+    await axios
+      .delete(
+        `${process.env.REACT_APP_BASE_URL_ADMIN}/deleteProduct?productId=${productId}`
+      )
+      .then((res) => {
+        console.log("RESPONSE:", res);
+        Swal.fire({
+          title: "Success",
+          text: "Product has been seccessfully deleted.",
+          icon: "success",
+          timer: 3000,
+        });
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+        Swal.fire({
+          title: "Internal server error",
+          text: "We were unable to process your request at the moment. Please try again",
+          icon: "error",
+          timer: 3000,
+        });
+      });
+  };
+
+  const handleEditProduct = async () => {
+    setEditProductDisplay("block");
+    setOverlay("block");
+  };
+
+  const handleDeleteFromCart = async () => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user._id;
+    console.log("USERID:", userId);
+    console.log("PRODUCTID:", productId);
+    await axios
+      .delete(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/removeProductsFromCart?userId=${userId}&productId=${productId}`
+      )
+      .then((res) => {
+        console.log("RESPONSE:", res);
+        Swal.fire({
+          title: "Success",
+          text: "Product has ben removed from your cart.",
+          icon: "success",
+          timer: 3000,
+        });
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+        Swal.fire({
+          title: "Internal server error",
+          text: "We were unable to process your request at the moment. Please try again",
+          icon: "error",
+          timer: 3000,
+        });
+      });
+  };
+
+  const checkoutCart = async () => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user._id;
+    await axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/makeOrder?userId=${userId}&cartId=${cartId}`
+      )
+      .then((res) => {
+        console.log("RESPONSE:", res);
+        Swal.fire({
+          title: "Success",
+          text: res.data.message,
+          icon: "success",
+          timer: 3000,
+        });
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+        Swal.fire({
+          title: "Attention",
+          text: err.response.data.message,
+          icon: "info",
+          timer: 3000,
+        });
+      });
+  };
+
   return (
     <Fade duration={1500}>
       <div
         className="product-card card mx-2 mb-5"
-        style={{ width: "18rem", height: "250px" }}
+        style={{ width: "18rem", height: "250px", position: "relative" }}
       >
         <img className="card-img-top product-image" src={image} alt="" />
 
@@ -115,21 +217,36 @@ function ProductCard({ title, description, image, productId, price, isAdmin, isU
             {isAdmin && (
               <>
                 <button
-                  onClick={handleAddToCart}
+                  onClick={handleDeleteProduct}
                   href="/shop"
                   className="btn ds-bg-pink"
                 >
-                  <i class="bi bi-cart-plus"></i>
+                  <i class="bi bi-trash3"></i>
                 </button>
-                <button onClick={handleAddToWishlist} className="btn btn-dark">
-                  <i class="bi bi-heart"></i>
+                <button onClick={handleEditProduct} className="btn btn-dark">
+                  <i class="bi bi-pencil"></i>
                 </button>
               </>
             )}
+
+            {isAdmin && (
+              <EditProduct
+                editProductDisplay={editProductDisplay}
+                productId={productId}
+                overlay={overlay}
+                setOverlay={setOverlay}
+                setEditProductDisplay={setEditProductDisplay}
+              />
+            )}
+
             {isCart && (
               <>
-                <button onClick={handleAddToWishlist} className="btn btn-dark">
-                  <i class="bi bi-heart"></i>
+                <button onClick={handleDeleteFromCart} className="btn btn-dark">
+                  <i class="bi bi-trash"></i>
+                </button>
+
+                <button onClick={checkoutCart} className="btn btn-dark">
+                  Place order
                 </button>
               </>
             )}
@@ -139,5 +256,6 @@ function ProductCard({ title, description, image, productId, price, isAdmin, isU
     </Fade>
   );
 }
+// const EditProduct = styled.div``;
 
 export default ProductCard;

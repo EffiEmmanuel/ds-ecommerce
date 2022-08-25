@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../App";
 
 function UserLoginForm() {
-  const {
-    setIsUserLoggedIn,
-    setIsUserVerified,
-    isAdminLoggedIn,
-    setIsAdminLoggedIn,
-  } = useContext(AppContext);
+  // const {
+  //   setIsUserLoggedIn,
+  //   setIsUserVerified,
+  //   isAdminLoggedIn,
+  //   setIsAdminLoggedIn,
+  // } = useContext(AppContext);
   const navigator = useNavigate();
 
   const onSubmit = async (values, actions, event) => {
@@ -27,18 +27,21 @@ function UserLoginForm() {
           icon: "success",
           timer: 3000,
         });
-        sessionStorage.setItem("token", JSON.stringify(res.data.token));
-        setIsUserLoggedIn(true);
-        res.data.user.verified
-          ? setIsUserVerified(true)
-          : setIsUserVerified(false);
-        navigator("/shop");
 
         // Log out any currently logged in admin
-        if (sessionStorage.getItem("admin-token") && isAdminLoggedIn) {
+        if (sessionStorage.getItem("admin-token")) {
           sessionStorage.removeItem("admin-token");
-          setIsAdminLoggedIn(false);
         }
+        if (sessionStorage.getItem("admin")) {
+          sessionStorage.removeItem("admin");
+        }
+
+        console.log('RES:', JSON.stringify(res.data.user))
+        // Log in user
+        sessionStorage.setItem('token', res.data.token);
+        sessionStorage.setItem('user', JSON.stringify(res.data.user));
+
+        navigator("/shop");
         // window.location.reload()
       })
       .catch((err) => {

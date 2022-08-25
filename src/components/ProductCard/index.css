@@ -5,10 +5,12 @@
 .product-card {
     cursor: pointer;
     transition: transform .5s ease-in-out !important;
+    position: relative;
+    z-index: 5 !important;
 }
 
 .product-card:hover {
-    transform: scale(1.05) !important;
+    /* transform: scale(1.05) !important; */
 }
 
 .product-image {

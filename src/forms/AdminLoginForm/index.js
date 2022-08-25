@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppContext } from "../../App";
 
 function AdminLoginForm() {
-  const { setIsAdminLoggedIn, isUserLoggedIn, setIsUserLoggedIn } = useContext(AppContext)
+  // const { setIsAdminLoggedIn, isUserLoggedIn, setIsUserLoggedIn } = useContext(AppContext)
   const navigator = useNavigate()
 
   const onSubmit = async (values, actions) => {
@@ -22,21 +22,25 @@ function AdminLoginForm() {
         timer: 3000
       })
 
-      sessionStorage.setItem('admin-token', JSON.stringify(res.data.token))
-      setIsAdminLoggedIn(true)
+      // Log out any currently logged in user
+      if (sessionStorage.getItem("token")) {
+        sessionStorage.removeItem("token");
+      }
+      if (sessionStorage.getItem("user")) {
+        sessionStorage.removeItem("user");
+      }
+
+      sessionStorage.setItem('admin-token', res.data.token)
+      sessionStorage.setItem('admin', JSON.stringify(res.data.admin))
+
       navigator('/admin/dashboard')
 
-      // Log out any currently logged in user
-      if (sessionStorage.getItem("token") && isUserLoggedIn) {
-        sessionStorage.removeItem("token");
-        setIsUserLoggedIn(false);
-      }
       // window.location.reload()
     })
     .catch(err => {
       Swal.fire({
         title: 'Error',
-        text: err.response.data.message,
+        text: 'An error occured. Please try again',
         icon: 'error',
         timer: 3000
       })

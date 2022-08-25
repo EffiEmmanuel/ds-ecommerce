@@ -11,7 +11,7 @@ function ViewProducts() {
         .get(`${process.env.REACT_APP_BASE_URL_ADMIN}/getProduct`)
         .then((res) => {
           console.log("RESPONSE:", res);
-          setProducts(res.data.products)
+          setProducts(res.data.products);
         })
         .catch((err) => {
           console.log("ERROR:", err);
@@ -41,6 +41,7 @@ function ViewProducts() {
                     image={product.image}
                     productId={product._id}
                     price={product.price}
+                    isAdmin={true}
                   />
                 </div>
               );

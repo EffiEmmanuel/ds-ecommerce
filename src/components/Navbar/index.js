@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./index.css";
 import logo from "../../assets/images/logo.png";
 import SearchProductsForm from "../../forms/SearchProductsForm";
@@ -7,16 +7,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { AppContext } from "../../App";
 
 function Navbar() {
-  const {
-    isUserLoggedIn,
-    isAdminLoggedIn,
-    setIsUserLoggeIn,
-    setIsAdminLoggedIn,
-    isUserVerified,
-  } = useContext(AppContext);
+  const [isVerified, setIsVerified] = useState(null)
 
   const navigator = useNavigate();
 
@@ -29,9 +22,11 @@ function Navbar() {
   };
 
   const resendVerificationEmail = async () => {
-    const user = JSON.parse(sessionStorage.getItem("token"));
+    const user = JSON.parse(sessionStorage.getItem("user"));
     const email = user?.email;
     const userId = user?._id;
+    user?.verified ? setIsVerified(true) : setIsVerified(false)
+
     await axios
       .post(
         `${process.env.REACT_APP_BASE_URL_CUSTOMER}/resendToken?userId=${userId}&&email=${email}`
@@ -66,14 +61,20 @@ function Navbar() {
               <img src={logo} alt="Digital Superstore" className="logo" />
             </a>
 
-            {!isAdminLoggedIn && <SearchProductsForm />}
+            {!sessionStorage.getItem("admin-token") && <SearchProductsForm />}
 
             <ul
               className="nav-items"
-              style={{ width: `${isAdminLoggedIn && "90%"}` }}
+              style={{
+                width: `${sessionStorage.getItem("admin-token") && "90%"}`,
+              }}
             >
+              {/* {sessionStorage.getItem("token") && <p>USER IS LOGGED IN</p>} */}
+              {/* {sessionStorage.getItem("admin-token") && (
+                <p>ADMIN IS LOGGED IN</p>
+              )} */}
               {/* Admin specific links */}
-              {isAdminLoggedIn && (
+              {sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
                   <a href="/admin/dashboard" className="nav-link">
                     Dashboard
@@ -81,7 +82,7 @@ function Navbar() {
                 </li>
               )}
 
-              {isAdminLoggedIn && (
+              {sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
                   <a href="/admin/products/createNew" className="nav-link">
                     Create Product
@@ -89,15 +90,15 @@ function Navbar() {
                 </li>
               )}
 
-              {isAdminLoggedIn && (
+              {sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
-                  <a href="/admin/products/view" className="nav-link">
+                  <a href="/admin/products/viewProducts" className="nav-link">
                     View Products
                   </a>
                 </li>
               )}
 
-              {isAdminLoggedIn && (
+              {sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
                   <a href="/admin/orders/view" className="nav-link">
                     View orders
@@ -105,7 +106,7 @@ function Navbar() {
                 </li>
               )}
 
-              {!isAdminLoggedIn && (
+              {!sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
                   <a href="/shop" className="nav-link">
                     Shop
@@ -113,12 +114,13 @@ function Navbar() {
                 </li>
               )}
 
-              {isAdminLoggedIn && (
+              {sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
                   <a
                     onClick={() => {
                       sessionStorage.removeItem("admin-token");
-                      setIsAdminLoggedIn(false);
+                      sessionStorage.clear();
+                      // setIsAdminLoggedIn(false);
                       navigator("/");
                     }}
                     href="/"
@@ -130,18 +132,20 @@ function Navbar() {
               )}
 
               <li className="nav-item">
-                {!isUserLoggedIn && (
+                {!sessionStorage.getItem("token") && (
                   <a href="/login" className="nav-link">
-                    Log in as user
+                    Log in
                   </a>
                 )}
+              </li>
 
-                {isUserLoggedIn && (
+              {sessionStorage.getItem("token") && (
+                <li className="nav-item">
                   <a
                     onClick={() => {
                       sessionStorage.clear();
                       sessionStorage.removeItem("token");
-                      setIsUserLoggeIn(false);
+                      // setIsUserLoggeIn(false);
                       navigator("/");
                     }}
                     href="/"
@@ -149,18 +153,18 @@ function Navbar() {
                   >
                     Log out
                   </a>
-                )}
-              </li>
+                </li>
+              )}
 
-              {!isUserLoggedIn && (
+              {!sessionStorage.getItem("token") && (
                 <li className="nav-item">
                   <a href="/signup" className="nav-link">
-                    Sign up as user
+                    Sign up
                   </a>
                 </li>
               )}
 
-              {isUserLoggedIn && (
+              {sessionStorage.getItem("token") && (
                 <li className="nav-item d-flex">
                   <a href="/cart" className="nav-link">
                     <i class="bi bi-cart cart-icon"></i>
@@ -191,7 +195,7 @@ function Navbar() {
             >
               <ul>
                 {/* Admin specific links */}
-                {isAdminLoggedIn && (
+                {sessionStorage.getItem('admin-token') && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/dashboard"
@@ -202,7 +206,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {isAdminLoggedIn && (
+                {sessionStorage.getItem('admin-token') && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/products/createNew"
@@ -213,7 +217,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {isAdminLoggedIn && (
+                {sessionStorage.getItem('admin-token') && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/products/view"
@@ -224,7 +228,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {isAdminLoggedIn && (
+                {sessionStorage.getItem('admin-token') && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/orders/view"
@@ -234,7 +238,7 @@ function Navbar() {
                     </a>
                   </li>
                 )}
-                {!isAdminLoggedIn && (
+                {!sessionStorage.getItem('admin-token') &&  (
                   <li className="mobile-nav-item">
                     <a href="/shop" className="mobile-nav-link nav-link">
                       Shop
@@ -242,12 +246,11 @@ function Navbar() {
                   </li>
                 )}
 
-                {isAdminLoggedIn && (
+                {sessionStorage.getItem('admin-token') && (
                   <li className="mobile-nav-item">
                     <a
                       onClick={() => {
                         sessionStorage.removeItem("admin-token");
-                        setIsAdminLoggedIn(false);
                         navigator("/");
                       }}
                       href="/"
@@ -259,18 +262,16 @@ function Navbar() {
                 )}
 
                 <li className="mobile-nav-item">
-                  {!isUserLoggedIn && (
+                  {!sessionStorage.getItem('token') && (
                     <a href="/login" className="mobile-nav-link nav-link">
-                      Log in as user
+                      Log in
                     </a>
                   )}
 
-                  {isUserLoggedIn && (
+                  {sessionStorage.getItem('token') && (
                     <a
                       onClick={() => {
-                        sessionStorage.clear();
                         sessionStorage.removeItem("token");
-                        setIsUserLoggeIn(false);
                         window.location.reload();
                       }}
                       href="/"
@@ -281,15 +282,15 @@ function Navbar() {
                   )}
                 </li>
 
-                {!isUserLoggedIn && (
+                {!sessionStorage.getItem('token') && (
                   <li className="mobile-nav-item">
                     <a href="/signup" className="mobile-nav-link nav-link">
-                      Sign up as user
+                      Sign up
                     </a>
                   </li>
                 )}
 
-                {isUserLoggedIn && (
+                {sessionStorage.getItem('token') && (
                   <li className="mobile-nav-item d-flex">
                     <a href="/cart" className="mobile-nav-link nav-link">
                       <i class="bi bi-cart cart-icon"></i>
@@ -304,7 +305,7 @@ function Navbar() {
             </MobileMenu>
           </nav>
         </div>
-        {isUserLoggedIn && !isUserVerified && (
+        {isVerified === false && (
           <p className="verification-message bg-danger p-2">
             Please verify your email.{" "}
             <span onClick={resendVerificationEmail}>

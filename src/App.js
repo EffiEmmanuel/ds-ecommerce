@@ -12,18 +12,13 @@ import UserLogin from "./components/UserLogin";
 import UserSignUp from "./components/UserSignup";
 import CreateProduct from "./components/Admin/CreateProduct";
 import ViewProducts from "./components/Admin/ViewProducts";
+import Cart from "./components/Cart";
 
 export const AppContext = createContext(null);
 
 function App() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false)
-  const [isUserVerified, setIsUserVerified] = useState(false)
-  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
-
   return (
     <React.Fragment>
-      <AppContext.Provider value={{isUserLoggedIn, setIsUserLoggedIn, isAdminLoggedIn, setIsAdminLoggedIn, isUserVerified, setIsUserVerified}}>
         <div className="container-fluid">
           <Navbar />
           <Routes>
@@ -35,7 +30,7 @@ function App() {
             <Route path="/password/reset" element={<Homepage />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/products/:pid" element={<Homepage />} />
-            <Route path="/cart" element={<Homepage />} />
+            <Route path="/cart" element={<Cart />} />
 
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -49,7 +44,6 @@ function App() {
             />
           </Routes>
         </div>
-      </AppContext.Provider>
     </React.Fragment>
   );
 }
