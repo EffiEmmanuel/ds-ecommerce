@@ -1,40 +1,54 @@
 import { useFormik } from "formik";
 import "./index.css";
-import React from "react";
-import handleFormSubmit from "../../helpers/handleFormSubmit";
+import React, { useContext } from "react";
 import loginSchema from "./validation";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from 'react-router-dom'
-import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
+import { AppContext } from "../../App";
 
 function UserLoginForm() {
-  const navigator = useNavigate()
+  const {
+    setIsUserLoggedIn,
+    setIsUserVerified,
+    isAdminLoggedIn,
+    setIsAdminLoggedIn,
+  } = useContext(AppContext);
+  const navigator = useNavigate();
 
-  const onSubmit = async (values, actions) => {
-    await axios.post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/login`, values)
-    .then(res => {
-      Swal.fire({
-        title: 'Success',
-        text: res.data.message,
-        icon: 'success',
-        timer: 3000
-      })
+  const onSubmit = async (values, actions, event) => {
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/login`, values)
+      .then((res) => {
+        Swal.fire({
+          title: "Success",
+          text: res.data.message,
+          icon: "success",
+          timer: 3000,
+        });
+        sessionStorage.setItem("token", JSON.stringify(res.data.token));
+        setIsUserLoggedIn(true);
+        res.data.user.verified
+          ? setIsUserVerified(true)
+          : setIsUserVerified(false);
+        navigator("/shop");
 
-      const token = jwtDecode(res.data.token)
-      console.log('DECODED USER:', token)
-      sessionStorage.setItem('token', JSON.stringify(token))
-      navigator('/shop')
-      window.location.reload()
-    })
-    .catch(err => {
-      Swal.fire({
-        title: 'Error',
-        text: err.response.data.message,
-        icon: 'error',
-        timer: 3000
+        // Log out any currently logged in admin
+        if (sessionStorage.getItem("admin-token") && isAdminLoggedIn) {
+          sessionStorage.removeItem("admin-token");
+          setIsAdminLoggedIn(false);
+        }
+        // window.location.reload()
       })
-    })
+      .catch((err) => {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          timer: 3000,
+        });
+      });
   };
 
   const {

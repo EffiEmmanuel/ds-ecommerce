@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { number } from "yup";
 
-function ProductCard({ title, description, image, productId, price }) {
+function ProductCard({ title, description, image, productId, price, isAdmin, isUser, isCart }) {
   const navigator = useNavigate();
 
   const handleAddToWishlist = async () => {
@@ -21,9 +21,9 @@ function ProductCard({ title, description, image, productId, price }) {
     }
 
     const user = JSON.parse(sessionStorage.getItem("token"));
-    console.log(user)
+    console.log(user);
     const userId = user._id;
-    console.log(typeof userId)
+    console.log(typeof userId);
     await axios
       .post(
         `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToWishlist?userId=${userId}&productId=${productId}`
@@ -62,7 +62,7 @@ function ProductCard({ title, description, image, productId, price }) {
       const userId = user._id;
       await axios
         .post(
-          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCart?userId=${userId}&productId=${productId}`
+          `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCartP?userId=${userId}&productId=${productId}`
         )
         .then((res) => {
           console.log("RESPONSE:", res);
@@ -98,16 +98,41 @@ function ProductCard({ title, description, image, productId, price }) {
           <p className="semibold-text">₦{price}</p>
           <p className="card-text product-description">{description}</p>
           <div className="d-flex justify-content-between align-items-center">
-            <button
-              onClick={handleAddToCart}
-              href="/shop"
-              className="btn ds-bg-pink"
-            >
-              <i class="bi bi-cart-plus"></i>
-            </button>
-            <button onClick={handleAddToWishlist} className="btn btn-dark">
-              <i class="bi bi-heart"></i>
-            </button>
+            {isUser && (
+              <>
+                <button
+                  onClick={handleAddToCart}
+                  href="/shop"
+                  className="btn ds-bg-pink"
+                >
+                  <i class="bi bi-cart-plus"></i>
+                </button>
+                <button onClick={handleAddToWishlist} className="btn btn-dark">
+                  <i class="bi bi-heart"></i>
+                </button>
+              </>
+            )}
+            {isAdmin && (
+              <>
+                <button
+                  onClick={handleAddToCart}
+                  href="/shop"
+                  className="btn ds-bg-pink"
+                >
+                  <i class="bi bi-cart-plus"></i>
+                </button>
+                <button onClick={handleAddToWishlist} className="btn btn-dark">
+                  <i class="bi bi-heart"></i>
+                </button>
+              </>
+            )}
+            {isCart && (
+              <>
+                <button onClick={handleAddToWishlist} className="btn btn-dark">
+                  <i class="bi bi-heart"></i>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

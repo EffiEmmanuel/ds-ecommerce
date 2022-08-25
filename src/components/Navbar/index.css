@@ -153,8 +153,7 @@ ul li a:hover {
 }
 
 @media (min-width: 768px) {
-  .menu,
-  .mobile-nav {
+  .menu {
     display: none;
   }
 }

@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import "./index.css";
 import logo from "../../assets/images/logo.png";
 import SearchProductsForm from "../../forms/SearchProductsForm";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import { AppContext } from "../../App";
 
 function Navbar() {
+  const {
+    isUserLoggedIn,
+    isAdminLoggedIn,
+    setIsUserLoggeIn,
+    setIsAdminLoggedIn,
+    isUserVerified,
+  } = useContext(AppContext);
+
   const navigator = useNavigate();
 
   const [mobileMenuVibility, setMobileMenuVisibility] = useState("none");
-  const [isUserVerified, setIsUserVerified ]= useState(true);
 
   const toggleMenu = (e) => {
     e.target.checked
@@ -47,11 +57,6 @@ function Navbar() {
       });
   };
 
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("token"));
-    setIsUserVerified(user?.verified);
-  }, [isUserVerified, sessionStorage.getItem("token")]);
-
   return (
     <div className="layout-container">
       <header className="header">
@@ -61,30 +66,85 @@ function Navbar() {
               <img src={logo} alt="Digital Superstore" className="logo" />
             </a>
 
-            <SearchProductsForm />
+            {!isAdminLoggedIn && <SearchProductsForm />}
 
-            <ul className="nav-items">
-              <li className="nav-item">
-                <a href="/shop" className="nav-link">
-                  Shop
-                </a>
-              </li>
+            <ul
+              className="nav-items"
+              style={{ width: `${isAdminLoggedIn && "90%"}` }}
+            >
+              {/* Admin specific links */}
+              {isAdminLoggedIn && (
+                <li className="nav-item">
+                  <a href="/admin/dashboard" className="nav-link">
+                    Dashboard
+                  </a>
+                </li>
+              )}
+
+              {isAdminLoggedIn && (
+                <li className="nav-item">
+                  <a href="/admin/products/createNew" className="nav-link">
+                    Create Product
+                  </a>
+                </li>
+              )}
+
+              {isAdminLoggedIn && (
+                <li className="nav-item">
+                  <a href="/admin/products/view" className="nav-link">
+                    View Products
+                  </a>
+                </li>
+              )}
+
+              {isAdminLoggedIn && (
+                <li className="nav-item">
+                  <a href="/admin/orders/view" className="nav-link">
+                    View orders
+                  </a>
+                </li>
+              )}
+
+              {!isAdminLoggedIn && (
+                <li className="nav-item">
+                  <a href="/shop" className="nav-link">
+                    Shop
+                  </a>
+                </li>
+              )}
+
+              {isAdminLoggedIn && (
+                <li className="nav-item">
+                  <a
+                    onClick={() => {
+                      sessionStorage.removeItem("admin-token");
+                      setIsAdminLoggedIn(false);
+                      navigator("/");
+                    }}
+                    href="/"
+                    className="nav-link"
+                  >
+                    Log out
+                  </a>
+                </li>
+              )}
 
               <li className="nav-item">
-                {!sessionStorage.getItem("token") && (
+                {!isUserLoggedIn && (
                   <a href="/login" className="nav-link">
-                    Log in
+                    Log in as user
                   </a>
                 )}
 
-                {sessionStorage.getItem("token") && (
+                {isUserLoggedIn && (
                   <a
                     onClick={() => {
                       sessionStorage.clear();
                       sessionStorage.removeItem("token");
-                      window.location.reload();
+                      setIsUserLoggeIn(false);
+                      navigator("/");
                     }}
-                    href={window.location}
+                    href="/"
                     className="nav-link"
                   >
                     Log out
@@ -92,26 +152,28 @@ function Navbar() {
                 )}
               </li>
 
-              <li className="nav-item">
-                {!sessionStorage.getItem("token") && (
+              {!isUserLoggedIn && (
+                <li className="nav-item">
                   <a href="/signup" className="nav-link">
-                    Sign up
+                    Sign up as user
                   </a>
-                )}
-              </li>
+                </li>
+              )}
 
-              <li className="nav-item d-flex">
-                <a href="/signup" className="nav-link">
-                  <i class="bi bi-cart cart-icon"></i>
-                </a>
+              {isUserLoggedIn && (
+                <li className="nav-item d-flex">
+                  <a href="/cart" className="nav-link">
+                    <i class="bi bi-cart cart-icon"></i>
+                  </a>
 
-                <a href="/login" className="nav-link">
-                  <i class="bi bi-person-circle profile-icon"></i>
-                </a>
-              </li>
+                  <a href="/login" className="nav-link">
+                    <i class="bi bi-person-circle profile-icon"></i>
+                  </a>
+                </li>
+              )}
             </ul>
 
-            {/* Mobile menu */}
+            {/* Mobile menu button */}
             <div className="menu">
               <input type="checkbox" id="toggle" onChange={toggleMenu} />
               <label htmlFor="toggle" id="menu-button">
@@ -119,33 +181,130 @@ function Navbar() {
               </label>
             </div>
 
-            <div
+            {/* Mobile menu */}
+            <MobileMenu
+              visibility={mobileMenuVibility}
               className="mobile-nav"
               style={{
                 display: `${mobileMenuVibility}`,
               }}
             >
               <ul>
+                {/* Admin specific links */}
+                {isAdminLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a
+                      href="/admin/dashboard"
+                      className="mobile-nav-link nav-link"
+                    >
+                      Dashboard
+                    </a>
+                  </li>
+                )}
+
+                {isAdminLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a
+                      href="/admin/products/createNew"
+                      className="mobile-nav-link nav-link"
+                    >
+                      Create Product
+                    </a>
+                  </li>
+                )}
+
+                {isAdminLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a
+                      href="/admin/products/view"
+                      className="mobile-nav-link nav-link"
+                    >
+                      View Products
+                    </a>
+                  </li>
+                )}
+
+                {isAdminLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a
+                      href="/admin/orders/view"
+                      className="mobile-nav-link nav-link"
+                    >
+                      View orders
+                    </a>
+                  </li>
+                )}
+                {!isAdminLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a href="/shop" className="mobile-nav-link nav-link">
+                      Shop
+                    </a>
+                  </li>
+                )}
+
+                {isAdminLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a
+                      onClick={() => {
+                        sessionStorage.removeItem("admin-token");
+                        setIsAdminLoggedIn(false);
+                        navigator("/");
+                      }}
+                      href="/"
+                      className="mobile-nav-link nav-link"
+                    >
+                      Log out
+                    </a>
+                  </li>
+                )}
+
                 <li className="mobile-nav-item">
-                  <a href="/login" className="mobile-nav-link nav-link">
-                    Log in
-                  </a>
+                  {!isUserLoggedIn && (
+                    <a href="/login" className="mobile-nav-link nav-link">
+                      Log in as user
+                    </a>
+                  )}
+
+                  {isUserLoggedIn && (
+                    <a
+                      onClick={() => {
+                        sessionStorage.clear();
+                        sessionStorage.removeItem("token");
+                        setIsUserLoggeIn(false);
+                        window.location.reload();
+                      }}
+                      href="/"
+                      className="mobile-nav-link nav-link"
+                    >
+                      Log out
+                    </a>
+                  )}
                 </li>
-                <li className="mobile-nav-item">
-                  <a href="/signup" className="mobile-nav-link nav-link">
-                    Sign up
-                  </a>
-                </li>
-                <li className="mobile-nav-item">
-                  <a href="/shop" className="mobile-nav-link nav-link">
-                    Shop
-                  </a>
-                </li>
+
+                {!isUserLoggedIn && (
+                  <li className="mobile-nav-item">
+                    <a href="/signup" className="mobile-nav-link nav-link">
+                      Sign up as user
+                    </a>
+                  </li>
+                )}
+
+                {isUserLoggedIn && (
+                  <li className="mobile-nav-item d-flex">
+                    <a href="/cart" className="mobile-nav-link nav-link">
+                      <i class="bi bi-cart cart-icon"></i>
+                    </a>
+
+                    <a href="/login" className="mobile-nav-link nav-link">
+                      <i class="bi bi-person-circle profile-icon"></i>
+                    </a>
+                  </li>
+                )}
               </ul>
-            </div>
+            </MobileMenu>
           </nav>
         </div>
-        {(sessionStorage.getItem("token") && !isUserVerified ) && (
+        {isUserLoggedIn && !isUserVerified && (
           <p className="verification-message bg-danger p-2">
             Please verify your email.{" "}
             <span onClick={resendVerificationEmail}>
@@ -157,5 +316,15 @@ function Navbar() {
     </div>
   );
 }
+
+const MobileMenu = styled.div`
+  @media (min-width: 1030px) {
+    ${(props) =>
+      props.visibility === "flex" &&
+      `
+      display: none !important
+    `}
+  }
+`;
 
 export default Navbar;

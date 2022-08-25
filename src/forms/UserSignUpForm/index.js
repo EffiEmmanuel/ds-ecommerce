@@ -20,10 +20,7 @@ function UserSignupForm() {
           icon: "success",
           timer: 3000,
         });
-
-        console.log("userId:", res);
         const userId = res.data.data._id;
-
         setTimeout(() => {
           navigator(`/email/verify?userId=${userId}`);
         }, 3200);

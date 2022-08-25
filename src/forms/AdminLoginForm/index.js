@@ -1,13 +1,15 @@
 import { useFormik } from "formik";
 import "../UserLoginForm/index.css";
-import React from "react";
+import React, { useContext } from "react";
 import loginSchema from "./validation";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom'
-import jwtDecode from "jwt-decode";
+
+import { AppContext } from "../../App";
 
 function AdminLoginForm() {
+  const { setIsAdminLoggedIn, isUserLoggedIn, setIsUserLoggedIn } = useContext(AppContext)
   const navigator = useNavigate()
 
   const onSubmit = async (values, actions) => {
@@ -20,11 +22,16 @@ function AdminLoginForm() {
         timer: 3000
       })
 
-      const token = jwtDecode(res.data.token)
-      console.log('DECODED USER:', token)
-      sessionStorage.setItem('admin-token', JSON.stringify(token))
+      sessionStorage.setItem('admin-token', JSON.stringify(res.data.token))
+      setIsAdminLoggedIn(true)
       navigator('/admin/dashboard')
-      window.location.reload()
+
+      // Log out any currently logged in user
+      if (sessionStorage.getItem("token") && isUserLoggedIn) {
+        sessionStorage.removeItem("token");
+        setIsUserLoggedIn(false);
+      }
+      // window.location.reload()
     })
     .catch(err => {
       Swal.fire({
