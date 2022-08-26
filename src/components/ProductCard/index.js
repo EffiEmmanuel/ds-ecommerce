@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import EditProduct from "../Admin/EditProduct";
 
+const currency = Intl.NumberFormat('en-US')
+
 function ProductCard({
   title,
   category,
@@ -259,7 +261,7 @@ function ProductCard({
         <div className="card-body">
           <a href={`/products/${productId}`} className="nav-link">
             <h5 className="card-title product-title semibold-text">{title}</h5>
-            <p className="semibold-text">₦{price}</p>
+            <p className="semibold-text">{`₦${currency.format(price)}`}</p>
             <p className="card-text product-description">{description}</p>
           </a>
           <div className="d-flex justify-content-between align-items-center mt-4">

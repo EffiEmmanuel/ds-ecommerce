@@ -97,13 +97,13 @@ function Navbar() {
                 </li>
               )}
 
-              {sessionStorage.getItem("admin-token") && (
+              {/* {sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
                   <a href="/admin/orders/view" className="nav-link">
                     View orders
                   </a>
                 </li>
-              )}
+              )} */}
 
               {!sessionStorage.getItem("admin-token") && (
                 <li className="nav-item">
@@ -231,7 +231,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {sessionStorage.getItem("admin-token") && (
+                {/* {sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/orders/view"
@@ -240,7 +240,7 @@ function Navbar() {
                       View orders
                     </a>
                   </li>
-                )}
+                )} */}
                 {!sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a href="/shop" className="mobile-nav-link nav-link">
