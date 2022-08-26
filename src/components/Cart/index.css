@@ -1,0 +1,7 @@
+.login-container-body.cart .product-link {
+    width: 50% !important;
+}
+
+.login-container-body.cart .product-link > img {
+    width: 100% !important;
+}

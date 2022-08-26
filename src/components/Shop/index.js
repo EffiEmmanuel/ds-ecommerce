@@ -50,12 +50,6 @@ function Shop() {
           })}
         </div>
       </div>
-
-      <div className="container-fluid">
-        <footer className="footer">
-          <p>Copyright &copy;2022. JavaScript Group 4</p>
-        </footer>
-      </div>
     </div>
   );
 }

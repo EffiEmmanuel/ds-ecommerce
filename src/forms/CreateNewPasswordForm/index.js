@@ -6,20 +6,12 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-import { AppContext } from "../../App";
-
-function UserLoginForm() {
-  // const {
-  //   setIsUserLoggedIn,
-  //   setIsUserVerified,
-  //   isAdminLoggedIn,
-  //   setIsAdminLoggedIn,
-  // } = useContext(AppContext);
+function CreateNewPasswordForm() {
   const navigator = useNavigate();
 
   const onSubmit = async (values, actions, event) => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/login`, values)
+      .post(`${process.env.REACT_APP_BASE_URL_CUSTOMER}/resetPassword`, values)
       .then((res) => {
         Swal.fire({
           title: "Success",
@@ -28,20 +20,7 @@ function UserLoginForm() {
           timer: 3000,
         });
 
-        // Log out any currently logged in admin
-        if (sessionStorage.getItem("admin-token")) {
-          sessionStorage.removeItem("admin-token");
-        }
-        if (sessionStorage.getItem("admin")) {
-          sessionStorage.removeItem("admin");
-        }
-
-        // Log in user
-        sessionStorage.setItem("token", res.data.token);
-        sessionStorage.setItem("user", JSON.stringify(res.data.user));
-
-        navigator("/shop");
-        // window.location.reload()
+        navigator("/login");
       })
       .catch((err) => {
         Swal.fire({
@@ -62,8 +41,9 @@ function UserLoginForm() {
     isSubmitting,
   } = useFormik({
     initialValues: {
-      email: "",
+      token: "",
       password: "",
+      confirmPassword: "",
     },
     validationSchema: loginSchema,
     onSubmit,
@@ -72,19 +52,19 @@ function UserLoginForm() {
   return (
     <form className="form-container" onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="token">Token:</label>
         <input
           type="text"
           className="form-control"
-          id="email"
-          value={values.email}
+          id="token"
+          value={values.token}
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        {errors.email && <p className="error">{errors.email}</p>}
+        {errors.token && <p className="error">{errors.token}</p>}
       </div>
 
-      <div className="form-group mt-4">
+      <div className="form-group">
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -95,13 +75,25 @@ function UserLoginForm() {
           onBlur={handleBlur}
         />
         {errors.password && <p className="error">{errors.password}</p>}
-        <small><a href="/forgotPassword" className="ds-pink" style={{cursor: 'pointer'}} >Forgot password?</a></small>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <input
+          type="password"
+          className="form-control"
+          id="confirmPassword"
+          value={values.confirmPassword}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
       </div>
       <button disabled={isSubmitting} className="btn btn-dark shop-btn">
-        Log in
+        Change
       </button>
     </form>
   );
 }
 
-export default UserLoginForm;
+export default CreateNewPasswordForm;

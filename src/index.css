@@ -24,11 +24,16 @@ code {
 }
 
 .main-content {
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 .ds-pink {
   color: #fd2a4d;
+}
+
+.error {
+  color: #fd2a4d;
+  font-size: .8rem;
 }
 
 .auth-question {
@@ -59,6 +64,10 @@ a.ds-pink {
   height: 100%;
   background-color: rgba(0, 0, 0, .25);
   z-index: 2;
+}
+
+.shop-btn.auth {
+  margin-top: 30px !important;
 }
 
 @media (max-width: 576px) {

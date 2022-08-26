@@ -52,13 +52,32 @@
   color: #fff;
 }
 
+/* Martins */
+.grd{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-items: center;
+}
+.picture{
+  display: grid;
+  justify-items: center;
+  border-radius: 50%;
+  width: 200px;
+  height:200px;
+}
+.txt{
+  display: grid;
+  justify-items: center;
+}
+
 @media (max-width: 768px) {
   .headline h1 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
   }
 
   .headline p {
     font-size: 0.9rem;
+    text-align: center;
   }
 }
 

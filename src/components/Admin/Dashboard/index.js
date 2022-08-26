@@ -1,18 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.css'
 import AdminCard from '../AdminCard'
+import axios from 'axios';
 
 function Dashboard() {
+  const admin = JSON.parse(sessionStorage.getItem('admin'))
+  const adminName = admin.name
+  const [stats, setStats] = useState(null);
+
+  let currency = Intl.NumberFormat('en-US')
+
+  useEffect(() => {
+    async function getStats() {
+      await axios
+        .get(
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/getAllUserStats`
+        )
+        .then((res) => {
+          setStats(res.data.Data);
+          console.log("RESPONSE:", res);
+          console.log("INCOME:", res.data.Data.income[0]?.total);
+        })
+        .catch((err) => {
+          console.log("ERROR:", err);
+        });
+    }
+    getStats();
+  }, []);
+
+  useEffect(() => {
+    async function getStats() {
+      await axios
+        .get(
+          `${process.env.REACT_APP_BASE_URL_ADMIN}/getAllUserStats`
+        )
+        .then((res) => {
+          setStats(res.data.Data);
+          console.log("RESPONSE:", res);
+          console.log("INCOME:", res.data.Data.income[0].total);
+        })
+        .catch((err) => {
+          console.log("ERROR:", err);
+        });
+    }
+    getStats();
+  }, []);
+
   return (
     <div className='main-content dashboard container-fluid'>
-        <h3 className='semibold-text'>Welcome back, Admin<span className='ds-pink'>.</span></h3>
+        <h3 className='semibold-text'>Welcome back, {adminName}<span className='ds-pink'>.</span></h3>
 
         <main className='main admin-cards d-flex flex-wrap justify-content-center align-items-center mt-5'>
           {/* <AdminCard /> */}
           <AdminCard
             title='Monthly Income'
             subtitle='All your income for this month'
-            figure='₦48,000'
+            figure={`₦ ${currency.format(stats.income[0]?.total)}`}
           />
 
           <AdminCard
@@ -24,7 +67,7 @@ function Dashboard() {
           <AdminCard
             title='Total orders'
             subtitle='Your all time orders'
-            figure='4,000'
+            figure={`${currency.format(stats?.totalOrders)}`}
           />
           
         </main>

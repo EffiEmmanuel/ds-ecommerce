@@ -19,9 +19,11 @@ function ProductCard({
   isAdmin,
   isUser,
   isCart,
+  isWishlist,
 }) {
   const [editProductDisplay, setEditProductDisplay] = useState("none");
   const [overlay, setOverlay] = useState("none");
+  // const [quantity, setQuantity] = useState(1);
 
   const navigator = useNavigate();
 
@@ -36,13 +38,12 @@ function ProductCard({
       navigator("/login");
     }
 
-    const user = JSON.parse(sessionStorage.getItem("token"));
+    const user = JSON.parse(sessionStorage.getItem("user"));
     console.log(user);
     const userId = user._id;
-    console.log(typeof userId);
     await axios
       .post(
-        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToWishlist?userId=${userId}&productId=${productId}`
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToWishlistP?userId=${userId}&productId=${productId}`
       )
       .then((res) => {
         console.log("RESPONSE:", res);
@@ -52,6 +53,45 @@ function ProductCard({
           icon: "success",
           timer: 3000,
         });
+      })
+      .catch((err) => {
+        console.log("ERROR:", err);
+        Swal.fire({
+          title: "Internal server error",
+          text: "We were unable to process your request at the moment. Please try again",
+          icon: "error",
+          timer: 3000,
+        });
+      });
+  };
+
+  const handleDeleteFromWishlist = async () => {
+    if (!sessionStorage.getItem("token")) {
+      Swal.fire({
+        title: "Hey!",
+        text: "You must be logged in to delete products from wishlist.",
+        icon: "info",
+        timer: 3000,
+      });
+      navigator("/login");
+    }
+
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    console.log(user);
+    const userId = user._id;
+    await axios
+      .delete(
+        `${process.env.REACT_APP_BASE_URL_CUSTOMER}/removeProductsFromWishlistP?userId=${userId}&productId=${productId}`
+      )
+      .then((res) => {
+        console.log("RESPONSE:", res);
+        Swal.fire({
+          title: "Success",
+          text: "Product has been removed from your wishlist.",
+          icon: "success",
+          timer: 3000,
+        });
+        window.location.reload()
       })
       .catch((err) => {
         console.log("ERROR:", err);
@@ -76,8 +116,8 @@ function ProductCard({
     } else {
       const user = JSON.parse(sessionStorage.getItem("user"));
       const userId = user._id;
-      console.log('USERID:', userId)
-      console.log('PRODUCT:', productId)
+      console.log("USERID:", userId);
+      console.log("PRODUCT:", productId);
       await axios
         .post(
           `${process.env.REACT_APP_BASE_URL_CUSTOMER}/addProductsToCartP?userId=${userId}&productId=${productId}`
@@ -151,7 +191,7 @@ function ProductCard({
           icon: "success",
           timer: 3000,
         });
-        window.location.reload()
+        window.location.reload();
       })
       .catch((err) => {
         console.log("ERROR:", err);
@@ -195,15 +235,34 @@ function ProductCard({
     <Fade duration={1500}>
       <div
         className="product-card card mx-2 mb-5"
-        style={{ width: "18rem", height: "250px", position: "relative" }}
+        style={{
+          // width: "18rem",
+          height: "250px",
+          position: "relative",
+          display: isCart ? "flex" : "block",
+          flexDirection: isCart ? "row" : "column",
+          justifyContent: isCart ? "space-between" : "normal",
+          alignItems: isCart ? "center" : "normal",
+          width: isCart ? "100%" : "18rem",
+        }}
       >
-        <img className="card-img-top product-image" src={image} alt="" />
-
+        <a href={`/products/${productId}`} className="product-link nav-link">
+          <img
+            className="card-img-top product-image"
+            src={image}
+            style={{
+              width: isCart ? "50%" : "18rem",
+            }}
+            alt=""
+          />
+        </a>
         <div className="card-body">
-          <h5 className="card-title product-title">{title}</h5>
-          <p className="semibold-text">₦{price}</p>
-          <p className="card-text product-description">{description}</p>
-          <div className="d-flex justify-content-between align-items-center">
+          <a href={`/products/${productId}`} className="nav-link">
+            <h5 className="card-title product-title semibold-text">{title}</h5>
+            <p className="semibold-text">₦{price}</p>
+            <p className="card-text product-description">{description}</p>
+          </a>
+          <div className="d-flex justify-content-between align-items-center mt-4">
             {isUser && (
               <>
                 <button
@@ -245,9 +304,62 @@ function ProductCard({
 
             {isCart && (
               <>
-                <button onClick={handleDeleteFromCart} className="btn btn-dark">
-                  <i class="bi bi-trash"></i>
-                </button>
+                <div className="d-flex justify-content-between align-items-center flex-wrap">
+                  {/* <form className="form-container">
+                    <div className="form-group d-flex">
+                      <button
+                        className="btn btn-light mx-1"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (quantity > 1) {
+                            setQuantity(quantity - 1);
+                          }
+                        }}
+                      >
+                        -
+                      </button>
+
+                      <input
+                        type="number"
+                        className="form-control w-50"
+                        name="quantity"
+                        min={1}
+                        value={quantity}
+                      />
+                      <button
+                        className="btn btn-light mx-1"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setQuantity(quantity + 1);
+                          
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </form> */}
+                  {isCart && (
+                    <button
+                      onClick={handleDeleteFromCart}
+                      className="btn btn-dark mt-3"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  )}
+                </div>
+              </>
+            )}
+
+            {isWishlist && (
+              <>
+                <div className="d-flex justify-content-between align-items-center flex-wrap">
+                  <button
+                    onClick={handleDeleteFromWishlist}
+                    className="btn btn-dark mt-3"
+                  >
+                    <i class="bi bi-trash"></i>
+                  </button>    
+                </div>
               </>
             )}
           </div>

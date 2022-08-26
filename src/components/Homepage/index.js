@@ -49,6 +49,13 @@ function Homepage() {
           <p>Nwogoh Emmanuel - Frontend developer</p>{" "}
           <p>Imuekemhe Precious Adams - Frontend developer</p>{" "}
         </div>
+        {/* <div className="grd">
+        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
+        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
+        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
+        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
+        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
+    </div> */}
       </main>
     </div>
   );

@@ -1,0 +1,13 @@
+.login-container-body.wishlist .product-card {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.login-container-body.wishlist .product-link {
+    width: 50%;
+}
+
+.login-container-body.wishlist .product-link > img {
+    width: 100% !important;
+}

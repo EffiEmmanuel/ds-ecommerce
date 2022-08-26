@@ -7,9 +7,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-
 function Navbar() {
-  const [isVerified, setIsVerified] = useState(null)
+  const [isVerified, setIsVerified] = useState(null);
 
   const navigator = useNavigate();
 
@@ -25,7 +24,7 @@ function Navbar() {
     const user = JSON.parse(sessionStorage.getItem("user"));
     const email = user?.email;
     const userId = user?._id;
-    user?.verified ? setIsVerified(true) : setIsVerified(false)
+    user?.verified ? setIsVerified(true) : setIsVerified(false);
 
     await axios
       .post(
@@ -166,6 +165,10 @@ function Navbar() {
 
               {sessionStorage.getItem("token") && (
                 <li className="nav-item d-flex">
+                  <a href="/wishlist" className="nav-link">
+                    <i class="bi bi-heart cart-icon"></i>
+                  </a>
+
                   <a href="/cart" className="nav-link">
                     <i class="bi bi-cart cart-icon"></i>
                   </a>
@@ -195,7 +198,7 @@ function Navbar() {
             >
               <ul>
                 {/* Admin specific links */}
-                {sessionStorage.getItem('admin-token') && (
+                {sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/dashboard"
@@ -206,7 +209,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {sessionStorage.getItem('admin-token') && (
+                {sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/products/createNew"
@@ -217,7 +220,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {sessionStorage.getItem('admin-token') && (
+                {sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/products/view"
@@ -228,7 +231,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {sessionStorage.getItem('admin-token') && (
+                {sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a
                       href="/admin/orders/view"
@@ -238,7 +241,7 @@ function Navbar() {
                     </a>
                   </li>
                 )}
-                {!sessionStorage.getItem('admin-token') &&  (
+                {!sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a href="/shop" className="mobile-nav-link nav-link">
                       Shop
@@ -246,7 +249,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {sessionStorage.getItem('admin-token') && (
+                {sessionStorage.getItem("admin-token") && (
                   <li className="mobile-nav-item">
                     <a
                       onClick={() => {
@@ -262,13 +265,13 @@ function Navbar() {
                 )}
 
                 <li className="mobile-nav-item">
-                  {!sessionStorage.getItem('token') && (
+                  {!sessionStorage.getItem("token") && (
                     <a href="/login" className="mobile-nav-link nav-link">
                       Log in
                     </a>
                   )}
 
-                  {sessionStorage.getItem('token') && (
+                  {sessionStorage.getItem("token") && (
                     <a
                       onClick={() => {
                         sessionStorage.removeItem("token");
@@ -282,7 +285,7 @@ function Navbar() {
                   )}
                 </li>
 
-                {!sessionStorage.getItem('token') && (
+                {!sessionStorage.getItem("token") && (
                   <li className="mobile-nav-item">
                     <a href="/signup" className="mobile-nav-link nav-link">
                       Sign up
@@ -290,7 +293,7 @@ function Navbar() {
                   </li>
                 )}
 
-                {sessionStorage.getItem('token') && (
+                {sessionStorage.getItem("token") && (
                   <li className="mobile-nav-item d-flex">
                     <a href="/cart" className="mobile-nav-link nav-link">
                       <i class="bi bi-cart cart-icon"></i>

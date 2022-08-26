@@ -18,18 +18,6 @@
   right: 0;
 }
 
-.footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 2px -5px 33px -14px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 2px -5px 33px -14px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 2px -5px 33px -14px rgba(0, 0, 0, 0.1);
-  font-size: .85rem;
-}
-
 .shop-product {
   margin: 0 0 130px;
   height: 450px;

@@ -1,0 +1,40 @@
+.product-detail .left, .product-detail .right {
+    width: 50%;
+}
+
+.product-detail .left img {
+    width: 100%;
+}
+
+.checkout-card {
+    height: 270px;
+    max-height: 60%;
+    position: relative;
+}
+
+.checkout-actions {
+    position: absolute;
+    bottom: 10px;
+    padding: 10px 30px;
+}
+
+.add-to-cart-action {
+    left: 20px;
+}
+
+.add-to-wishlist-action {
+    right: 20px;
+}
+
+
+@media (max-width: 992px) {
+    .product-detail .left, .product-detail .right {
+        width: 100%;
+    }
+
+    .product-detail {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

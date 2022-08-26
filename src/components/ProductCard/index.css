@@ -18,3 +18,8 @@
     object-fit: cover;
     object-position: top;
 }
+
+.product-card > a {
+    height: 100%;
+    width: 100%;
+}
