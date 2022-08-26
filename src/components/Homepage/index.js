@@ -57,12 +57,53 @@ function Homepage() {
           <p>Imuekemhe Precious Adams - Frontend developer</p>{" "}
         </div> */}
         <div className="d-flex flex-wrap justify-content-center align-items-center">
-          <Person image={kelvin} name='Ebube Okolie Kelvin' role='Project Manager' />
-          <Person image={effi} name='Effi Emmanuel' role='Lead Frontend developer' />
-          <Person image={akin} name='Olumuyide Akinloluwa' role='Lead Backend developer' />
-          <Person image={chinedu} name='Okatta Chinedu' role='Frontend developer' />
-          <Person image={adams} name='Imuekemhe Precious' role='Frontend developer' />
-          <Person image={martins} name='Nwogoh Emmanuel' role='Frontend developer' />
+          <Fade duration={1500}>
+            <Person
+              image={kelvin}
+              name="Ebube Okolie Kelvin"
+              role="Project Manager"
+            />
+          </Fade>
+
+          <Fade duration={1500} delay={200}>
+            <Person
+              image={effi}
+              name="Effi Emmanuel"
+              role="Lead Frontend developer"
+            />
+          </Fade>
+
+          <Fade duration={1500} delay={300}>
+            <Person
+              image={akin}
+              name="Olumuyide Akinloluwa"
+              role="Lead Backend developer"
+            />
+          </Fade>
+
+          <Fade duration={1500} delay={400}>
+            <Person
+              image={chinedu}
+              name="Okatta Chinedu"
+              role="Frontend developer"
+            />
+          </Fade>
+
+          <Fade duration={1500} delay={500}>
+            <Person
+              image={adams}
+              name="Imuekemhe Precious"
+              role="Frontend developer"
+            />
+          </Fade>
+
+          <Fade duration={1500} delay={600}>
+            <Person
+              image={martins}
+              name="Nwogoh Emmanuel"
+              role="Frontend developer"
+            />
+          </Fade>
         </div>
       </main>
     </div>
