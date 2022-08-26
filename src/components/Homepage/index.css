@@ -62,8 +62,9 @@
   display: grid;
   justify-items: center;
   border-radius: 50%;
-  width: 200px;
-  height:200px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 .txt{
   display: grid;

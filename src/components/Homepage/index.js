@@ -2,6 +2,13 @@ import React from "react";
 import "./index.css";
 import { Fade } from "react-reveal";
 import ps5Pad from "../../assets/images/ps5-pad-trimmy.png";
+import kelvin from "../../assets/images/1.jpg";
+import effi from "../../assets/images/2.jpg";
+import akin from "../../assets/images/6.jpg";
+import martins from "../../assets/images/3.jpg";
+import adams from "../../assets/images/5.jpg";
+import chinedu from "../../assets/images/4.jpg";
+import Person from "./Person";
 
 function Homepage() {
   return (
@@ -41,21 +48,22 @@ function Homepage() {
             Meet the development team<span className="ds-pink">.</span>
           </h2>
         </div>
-        <div className="d-flex flex-column justify-content-center align-items-center">
+        {/* <div className="d-flex flex-column justify-content-center align-items-center">
           <p>Ebube Okolie Kelvin - Project Manager</p>{" "}
           <p>Akinloluwa Olumuyide - Lead backend developer</p>{" "}
           <p>Effi Emmanuel Nwachukwu - Lead frontend developer</p>{" "}
           <p>Okatta Chinedu - Frontend developer</p>{" "}
           <p>Nwogoh Emmanuel - Frontend developer</p>{" "}
           <p>Imuekemhe Precious Adams - Frontend developer</p>{" "}
+        </div> */}
+        <div className="d-flex flex-wrap justify-content-center align-items-center">
+          <Person image={kelvin} name='Ebube Okolie Kelvin' role='Project Manager' />
+          <Person image={effi} name='Effi Emmanuel' role='Lead Frontend developer' />
+          <Person image={akin} name='Olumuyide Akinloluwa' role='Lead Backend developer' />
+          <Person image={chinedu} name='Okatta Chinedu' role='Frontend developer' />
+          <Person image={adams} name='Imuekemhe Precious' role='Frontend developer' />
+          <Person image={martins} name='Nwogoh Emmanuel' role='Frontend developer' />
         </div>
-        {/* <div className="grd">
-        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
-        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
-        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
-        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
-        <span><img src="C:\Users\HP\frontend\src\assets\images\Apple watch.jfif" className="picture"><br><span className="txt">akin</span> </span>
-    </div> */}
       </main>
     </div>
   );
