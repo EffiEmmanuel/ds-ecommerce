@@ -294,7 +294,11 @@ function Navbar() {
                 )}
 
                 {sessionStorage.getItem("token") && (
-                  <li className="mobile-nav-item d-flex">
+                  <li className="mobile-nav-item d-flex align-items-center justify-content-around">
+                    <a href="/wishlist" className="mobile-nav-link">
+                      <i class="bi bi-heart cart-icon"></i>
+                    </a>
+
                     <a href="/cart" className="mobile-nav-link nav-link">
                       <i class="bi bi-cart cart-icon"></i>
                     </a>

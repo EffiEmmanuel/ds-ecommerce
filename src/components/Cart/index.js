@@ -5,6 +5,9 @@ import Swal from "sweetalert2";
 import ProductCard from "../ProductCard";
 import { usePaystackPayment } from "react-paystack";
 
+
+const currency = Intl.NumberFormat('en-US')
+
 function Cart() {
   const [allProducts, setAllProducts] = useState([]);
   const [cartId, setCartId] = useState(null);
